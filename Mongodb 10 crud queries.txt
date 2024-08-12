@@ -1,0 +1,51 @@
+1. Create:
+  i)Insert a single document:
+	db.collectionName.insertOne({
+  	name: "John ",
+  	age: 30,
+  	email: "john@example.com"
+	});
+  ii)Insert multiple documents:
+	db.collectionName.insertMany([
+  	{ name: "Jane ", age: 25, email: "jane.doe@example.com" },
+  	{ name: "Sam", age: 35, email: "sam.smith@example.com" }
+	]);
+2. Read
+  i)Find a single document:
+	db.collectionName.findOne({ name: "John " });
+  ii)Find all documents that match a query:
+	db.collectionName.find({ age: { $gt: 25 } }).toArray();
+  iii)Find documents with pagination (e.g., 10 documents per page):
+	db.collectionName.find()
+  	.skip(0)   // Skip the first 0 documents
+  	.limit(10) // Limit the result to 10 documents
+  	.toArray();
+  iv)Find documents with specific fields:
+	db.collectionName.find(
+  	{ age: { $lt: 30 } },
+  	{ projection: { name: 1, email: 1 } }  // Include only name and email in the result
+	).toArray();
+3. Update
+ i)Update a single document:
+	db.collectionName.updateOne(
+  	{ name: "John" },
+  	{ $set: { age: 31 } }
+	);
+  ii)Update multiple documents:
+	db.collectionName.updateMany(
+  	{ age: { $lt: 30 } },
+  	{ $set: { status: "young" } }
+	);
+ iii)Upsert (update or insert):
+	db.collectionName.updateOne(
+  	{ name: "Alice" },
+  	{ $set: { age: 28 } },
+  	{ upsert: true }  // If no document matches, insert a new one
+	);
+4. Delete
+ i)Delete a single document:
+	db.collectionName.deleteOne({ name: "John" });
+ ii)Delete multiple documents:
+	db.collectionName.deleteMany({ age: { $lt: 30 } });
+ iii)Drop a collection:
+	db.collectionName.drop();
